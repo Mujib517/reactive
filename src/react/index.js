@@ -8,29 +8,22 @@ const attachProps = (elem, props) => {
 
 const appendChildren = (elem, children) => {
     if (!children) return;
-    console.log(children, 'children');
     if (Array.isArray(children)) {
-        for (let child of children) {
-            if (typeof child === 'function') {
-                const html = child();
-                console.log(html);
-                elem.appendChild(html);
-            }
-
-            else elem.appendChild(child);
-        }
-    } else {
-        elem.innerText = children;
+        children.forEach(child => appendChildren(elem, child));
     }
+    else elem.appendChild(children.nodeType ? children : document.createTextNode(children));
 };
 
-const createElement = (el, props, children) => {
-    const htmlElem = document.createElement(el);
+const createElement = (el, props, ...children) => {
+    if (typeof el === 'function') {
+        return el();
+    } else {
 
-    attachProps(htmlElem, props);
-    appendChildren(htmlElem, children);
-
-    return htmlElem;
+        const htmlElem = document.createElement(el);
+        attachProps(htmlElem, props);
+        appendChildren(htmlElem, children);
+        return htmlElem;
+    }
 };
 
 
