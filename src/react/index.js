@@ -3,6 +3,8 @@ import utils from "../utils";
 class Component {
     state = {}
 
+    constructor(props) { }
+
     setState() {
 
     }
@@ -28,7 +30,7 @@ const appendChildren = (elem, children) => {
 
 const createElement = (el, props, ...children) => {
     if (utils.isClass(el)) {
-        return new el().render();
+        return new el(props).render();
     }
     else if (typeof el === 'function') {
         return el(props);
