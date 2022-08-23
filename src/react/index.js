@@ -5,16 +5,25 @@ class Component {
 
     constructor(props) { }
 
-    setState() {
-
-    }
+    setState() { }
 }
+
+const attachEvent = (elem, evt, handler) => {
+    const eventName = evt.toLowerCase().substring(2);
+    elem.addEventListener(eventName, handler);
+};
+
+const isEvent = (prop) => {
+    return prop.startsWith('on') && prop.toLowerCase() in window;
+};
 
 const attachProps = (elem, props) => {
     if (!props) return;
 
     for (let key in props) {
-        elem.setAttribute(key, props[key]);
+        isEvent(key)
+            ? attachEvent(elem, key, props[key])
+            : elem.setAttribute(key, props[key]);
     }
 };
 

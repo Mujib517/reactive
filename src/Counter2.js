@@ -10,9 +10,19 @@ class Counter2 extends React.Component {
         this.state = { count: props.count };
     }
 
+    inc = () => {
+        console.log('inc...');
+    }
+
+    dec = () => {
+        console.log('dec...');
+    }
+
     render = () => {
         return <div>
             <h1>Count {this.state.count}</h1>
+            <button onClick={this.inc}>++</button>
+            <button onClick={this.dec}>--</button>
         </div>
     }
 };
