@@ -5,6 +5,8 @@ import Counter from './Counter';
 import React from './react';
 import ReactDOM from './react-dom';
 
+import './App.css';
+
 const Image = () => {
     return <img
         width={300}
