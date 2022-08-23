@@ -1,5 +1,6 @@
 /** @jsx React.createElement */
 
+import Counter2 from './Counter2';
 import React from './react';
 import ReactDOM from './react-dom';
 
@@ -19,6 +20,7 @@ const App = () => {
         <h1>Hello World</h1>
         <Image />
         <Counter count={10} />
+        <Counter2 />
     </div>
 };
 

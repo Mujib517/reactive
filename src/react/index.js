@@ -1,3 +1,13 @@
+import utils from "../utils";
+
+class Component {
+    state = {}
+
+    setState() {
+
+    }
+}
+
 const attachProps = (elem, props) => {
     if (!props) return;
 
@@ -17,10 +27,13 @@ const appendChildren = (elem, children) => {
 };
 
 const createElement = (el, props, ...children) => {
-    if (typeof el === 'function') {
+    if (utils.isClass(el)) {
+        return new el().render();
+    }
+    else if (typeof el === 'function') {
         return el(props);
-    } else {
-
+    }
+    else {
         const htmlElem = document.createElement(el);
         attachProps(htmlElem, props);
         appendChildren(htmlElem, children);
@@ -29,4 +42,4 @@ const createElement = (el, props, ...children) => {
 };
 
 
-export default { createElement };
+export default { createElement, Component };
