@@ -1,23 +1,18 @@
 import utils from "../utils";
 import { attachProps } from './props';
+import { appendChildren } from './children';
+import reactDom from "../react-dom";
 
 class Component {
     state = {}
 
     constructor(props) { }
 
-    setState() { }
+    setState(newState) {
+        this.state = { ...this.state, ...newState };
+        reactDom.rerender();
+    }
 }
-
-const appendChildren = (elem, children) => {
-    if (!children) return;
-    if (Array.isArray(children)) {
-        children.forEach(child => appendChildren(elem, child));
-    }
-    else {
-        elem.appendChild(children.nodeType ? children : document.createTextNode(children));
-    }
-};
 
 const createElement = (el, props, ...children) => {
     if (utils.isClass(el)) {

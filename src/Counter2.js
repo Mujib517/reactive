@@ -2,7 +2,7 @@ import React from './react';
 
 class Counter2 extends React.Component {
 
-    state = { count: 10 };
+    state = { count: 10, hasError: false };
 
     constructor(props) {
         super(props);
@@ -11,11 +11,11 @@ class Counter2 extends React.Component {
     }
 
     inc = () => {
-        console.log('inc...');
+        this.setState({ count: this.state.count + 1 });
     }
 
     dec = () => {
-        console.log('dec...');
+        this.setState({ count: this.state.count - 1 });
     }
 
     render = () => {

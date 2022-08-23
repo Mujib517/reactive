@@ -1,8 +1,16 @@
+let app, mountNode;
+
 const render = (el, node) => {
     if (typeof el === 'function') {
+        app = el;
+        mountNode = node;
         const html = el();
-        node.appendChild(html);
+        node.replaceChildren(html);
     }
 };
 
-export default { render };
+const rerender = () => {
+    render(app, mountNode);
+};
+
+export default { render, rerender };
