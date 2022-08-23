@@ -1,4 +1,5 @@
 import utils from "../utils";
+import { attachProps } from './props';
 
 class Component {
     state = {}
@@ -7,25 +8,6 @@ class Component {
 
     setState() { }
 }
-
-const attachEvent = (elem, evt, handler) => {
-    const eventName = evt.toLowerCase().substring(2);
-    elem.addEventListener(eventName, handler);
-};
-
-const isEvent = (prop) => {
-    return prop.startsWith('on') && prop.toLowerCase() in window;
-};
-
-const attachProps = (elem, props) => {
-    if (!props) return;
-
-    for (let key in props) {
-        isEvent(key)
-            ? attachEvent(elem, key, props[key])
-            : elem.setAttribute(key, props[key]);
-    }
-};
 
 const appendChildren = (elem, children) => {
     if (!children) return;

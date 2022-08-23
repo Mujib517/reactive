@@ -20,7 +20,7 @@ class Counter2 extends React.Component {
 
     render = () => {
         return <div>
-            <h1>Count {this.state.count}</h1>
+            <h1 style={{ margin: '5px', color: 'red', borderBottom: '1px solid grey' }}>Count {this.state.count}</h1>
             <button class="btn" onClick={this.inc}>++</button>
             <button class="btn" onClick={this.dec}>--</button>
         </div>
