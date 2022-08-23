@@ -11,12 +11,14 @@ const appendChildren = (elem, children) => {
     if (Array.isArray(children)) {
         children.forEach(child => appendChildren(elem, child));
     }
-    else elem.appendChild(children.nodeType ? children : document.createTextNode(children));
+    else {
+        elem.appendChild(children.nodeType ? children : document.createTextNode(children));
+    }
 };
 
 const createElement = (el, props, ...children) => {
     if (typeof el === 'function') {
-        return el();
+        return el(props);
     } else {
 
         const htmlElem = document.createElement(el);
