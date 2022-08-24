@@ -21,7 +21,6 @@ const App = () => {
         <Image />
         <Counter count={10} />
         <Counter2 count={50} />
-        <AutoCounter />
     </div>
 };
 

@@ -1,22 +1,31 @@
 import utils from "../utils";
 import { attachProps } from './props';
 import { appendChildren } from './children';
-import reactDom from "../react-dom";
+import ReactDOM from '../react-dom';
+
+let id = 0;
 
 class Component {
-    state = {}
+    state = {};
+    instanceId = null;
+    root = null;
 
     constructor(props) { }
 
     setState(newState) {
         this.state = { ...this.state, ...newState };
-        reactDom.rerender();
+        ReactDOM.updateVirtalDOM(this.render(), this.instanceId);
     }
 }
 
 const createElement = (el, props, ...children) => {
     if (utils.isClass(el)) {
-        return new el(props).render();
+        const component = new el(props);
+        const instanceId = ++id;
+        component.instanceId = instanceId;
+        const componentHtml = component.render();
+        componentHtml.setAttribute('instance-id', instanceId);
+        return componentHtml;
     }
     else if (typeof el === 'function') {
         return el(props);
