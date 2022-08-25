@@ -1,14 +1,16 @@
 import React from '../react';
+import reconcile from '../react/reconcile';
 
 let app, mountNode;
 let virtualDOM = null;
+let html = null;
 
 
 const render = (el, node) => {
     if (typeof el === 'function') {
         app = el;
         mountNode = node;
-        const html = el();
+        html = el();
         virtualDOM = html.cloneNode(true);
         node.replaceChildren(html);
     }
@@ -32,7 +34,7 @@ const findElementRoot = (root, instanceId, newChild) => {
 const updateVirtalDOM = (elRoot, instanceId) => {
     elRoot.setAttribute('instance-id', instanceId);
     findElementRoot(virtualDOM, instanceId, elRoot);
-    console.log(virtualDOM, 'vdom');
+    reconcile(virtualDOM, html);
 };
 
 export default { render, updateVirtalDOM };

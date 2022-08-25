@@ -13,9 +13,9 @@ class AutoCounter extends React.Component {
     }
 
     render() {
-        return <>
+        return <div>
             <h1>Count: {this.state.count}</h1>
-        </>
+        </div>
     }
 }
 
