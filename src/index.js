@@ -17,9 +17,6 @@ const Image = () => {
 
 const App = () => {
     return <div>
-        <h1>Hello World</h1>
-        <Image />
-        <Counter count={10} />
         <Counter2 count={50} />
     </div>
 };

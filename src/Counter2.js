@@ -18,12 +18,21 @@ class Counter2 extends React.Component {
         this.setState({ count: this.state.count - 1 });
     }
 
+    showError = () => {
+        this.setState({ hasError: !this.state.hasError });
+    };
+
     render = () => {
-        return <div>
-            <h1 style={{ margin: '5px', color: 'red', borderBottom: '1px solid grey' }}>Count {this.state.count}</h1>
-            <button class="btn" onClick={this.inc}>++</button>
-            <button class="btn" onClick={this.dec}>--</button>
-        </div>
+        return this.state.hasError
+            ? <div>
+                <h1 style={{ color: 'red' }}>Failed to load, please try again</h1>
+            </div> :
+            <div>
+                <h1 style={{ margin: '5px', color: 'red', borderBottom: '1px solid grey' }}>Count {this.state.count}</h1>
+                <button class="btn" onClick={this.inc}>++</button>
+                <button class="btn" onClick={this.dec}>--</button>
+                <button class="btn" onClick={this.showError}>Apply Style</button>
+            </div>;
     }
 };
 

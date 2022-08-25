@@ -18,16 +18,16 @@ const render = (el, node) => {
 
 const findElementRoot = (root, instanceId, newChild) => {
     if (!root || root.nodeType !== 1) return;
+
     const id = root.getAttribute('instance-id');
-    if (id == instanceId) return root;
+    if (id == instanceId) {
+        root.replaceWith(newChild);
+        return;
+    }
 
     for (let i = 0; i < root.childNodes.length; i++) {
         const child = root.childNodes[i];
-        if (findElementRoot(child, instanceId, newChild)) {
-            root.insertBefore(newChild, child);
-            child.remove();
-            return;
-        }
+        findElementRoot(child, instanceId, newChild);
     }
 };
 
