@@ -1,7 +1,11 @@
 const arePropsEqual = (node1, node2) => {
     if (node1.nodeType === 3) return true;
-    for (let attr of node1.attributes) {
-        console.log(attr);
+
+    const attributes = node1.getAttributeNames();
+    for (let attr of attributes) {
+        if (node1.getAttribute(attr) !== node2.getAttribute(attr)) {
+            node2.setAttribute(attr, node1.getAttribute(attr));
+        }
     }
     if (node1.hasAttributes() !== node2.hasAttributes()) {
         return false;
