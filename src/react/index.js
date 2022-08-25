@@ -14,7 +14,7 @@ class Component {
 
     setState(newState) {
         this.state = { ...this.state, ...newState };
-        ReactDOM.updateVirtalDOM(this.render(), this.instanceId);
+        ReactDOM.updateVirtualDOM(this.render(), this.instanceId);
     }
 }
 

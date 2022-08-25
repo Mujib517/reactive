@@ -21,6 +21,7 @@ const findElementRoot = (root, instanceId, newChild) => {
 
     const id = root.getAttribute('instance-id');
     if (id == instanceId) {
+        root.innerHtml = '';
         root.replaceWith(newChild);
         return;
     }
@@ -31,10 +32,10 @@ const findElementRoot = (root, instanceId, newChild) => {
     }
 };
 
-const updateVirtalDOM = (elRoot, instanceId) => {
+const updateVirtualDOM = (elRoot, instanceId) => {
     elRoot.setAttribute('instance-id', instanceId);
     findElementRoot(virtualDOM, instanceId, elRoot);
     reconcile(virtualDOM, html);
 };
 
-export default { render, updateVirtalDOM };
+export default { render, updateVirtualDOM };
