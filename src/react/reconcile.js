@@ -13,7 +13,7 @@ const arePropsEqual = (node1, node2) => {
     return true;
 };
 
-const areSameElement = (node1, node2) => {
+const areSameElements = (node1, node2) => {
     return node1.tagName === node2.tagName;
 };
 
@@ -27,12 +27,13 @@ const areContentsSame = (node1, node2) => {
 const reconcileRec = (vRoot, domRoot) => {
     if (!vRoot && !domRoot) return;
 
-    if (!areSameElement(vRoot, domRoot)) {
-        domRoot = vRoot;
+    if (!areSameElements(vRoot, domRoot)) {
+        domRoot.replaceWith(vRoot.cloneNode(true));
         return;
     }
     if (!areContentsSame(vRoot, domRoot)) {
         domRoot.textContent = vRoot.textContent;
+        return;
     }
     if (!arePropsEqual(vRoot, domRoot)) {
         domRoot.attributes = vRoot.attributes;
@@ -48,7 +49,6 @@ const reconcileRec = (vRoot, domRoot) => {
 
 const reconcile = (vDom, dom) => {
     reconcileRec(vDom, dom);
-    console.log('after reconciliation dom is ', dom);
 };
 
 export default reconcile;
