@@ -16,7 +16,7 @@ const render = (el, node) => {
     }
 };
 
-const findElementRoot = (root, instanceId, newChild) => {
+const update = (root, instanceId, newChild) => {
     if (!root || root.nodeType !== 1) return;
 
     const id = root.getAttribute('instance-id');
@@ -28,13 +28,16 @@ const findElementRoot = (root, instanceId, newChild) => {
 
     for (let i = 0; i < root.childNodes.length; i++) {
         const child = root.childNodes[i];
-        findElementRoot(child, instanceId, newChild);
+        update(child, instanceId, newChild);
     }
 };
 
 const updateVirtualDOM = (elRoot, instanceId) => {
     elRoot.setAttribute('instance-id', instanceId);
-    findElementRoot(virtualDOM, instanceId, elRoot);
+
+    if (instanceId == virtualDOM.getAttribute('instance-id')) virtualDOM = elRoot;
+    else update(virtualDOM, instanceId, elRoot);
+
     reconcile(virtualDOM, html);
 };
 

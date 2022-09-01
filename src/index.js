@@ -7,6 +7,7 @@ import ReactDOM from './react-dom';
 
 import './App.css';
 import AutoCounter from './AutoCounter';
+import List from './List';
 
 const Image = () => {
     return <img
@@ -16,12 +17,7 @@ const Image = () => {
 };
 
 const App = () => {
-    return <div>
-        <h1>Hello World</h1>
-        <Image />
-        <Counter count={10} />
-        <Counter2 count={50} />
-    </div>
+    return <List />
 };
 
 const root = document.getElementById('root');
