@@ -21,7 +21,6 @@ const update = (root, instanceId, newChild) => {
 
     const id = root.getAttribute('instance-id');
     if (id == instanceId) {
-        root.innerHtml = '';
         root.replaceWith(newChild);
         return;
     }
@@ -33,8 +32,6 @@ const update = (root, instanceId, newChild) => {
 };
 
 const updateVirtualDOM = (elRoot, instanceId) => {
-    elRoot.setAttribute('instance-id', instanceId);
-
     if (instanceId == virtualDOM.getAttribute('instance-id')) virtualDOM = elRoot;
     else update(virtualDOM, instanceId, elRoot);
 

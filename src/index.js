@@ -8,6 +8,7 @@ import ReactDOM from './react-dom';
 import './App.css';
 import AutoCounter from './AutoCounter';
 import List from './List';
+import ShowHide from './ShowHide';
 
 const Image = () => {
     return <img
@@ -17,7 +18,10 @@ const Image = () => {
 };
 
 const App = () => {
-    return <List />
+    return <div>
+        <List />
+        <ShowHide />
+    </div>
 };
 
 const root = document.getElementById('root');

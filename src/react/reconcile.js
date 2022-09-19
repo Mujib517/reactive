@@ -1,5 +1,3 @@
-import $ from 'jquery';
-
 let operations = [];
 
 const op = {
@@ -42,7 +40,7 @@ const reconcileRec = (vRoot, domRoot) => {
     if (!vRoot && !domRoot) return;
 
     if (!areSameElements(vRoot, domRoot)) {
-        operations.push({ type: op.ReplaceRoot, src: domRoot, dest: vRoot.cloneNode(true) });
+        operations.push({ type: op.ReplaceRoot, src: domRoot, dest: vRoot });
         return;
     }
 
@@ -63,8 +61,7 @@ const reconcileRec = (vRoot, domRoot) => {
         const vChild = vRoot.childNodes[i];
         const domChild = domRoot.childNodes[i];
         if (vChild && !domChild) {
-            const newNode = $(vChild).clone(true, true);
-            operations.push({ type: op.Add, parent: domRoot, node: newNode });
+            operations.push({ type: op.Add, parent: domRoot, node: vChild });
             continue;
         }
         if (!vChild && domChild) {
@@ -96,14 +93,13 @@ const applyOperations = () => {
     for (let operation of operations) {
         switch (operation.type) {
             case op.Add:
-                operation.node.appendTo(operation.parent);
+                operation.parent.appendChild(operation.node.cloneNode(true));
                 break;
             case op.Delete:
-                console.log('deleting');
                 operation.node.remove();
                 break;
             case op.ChangeContent:
-                operation.src.textContent = operation.dest.textContent;
+                operation.dest.textContent = operation.src.textContent;
                 break;
             case op.ChangeProps:
                 applyProps(operation.src, operation.dest);
@@ -122,5 +118,37 @@ const reconcile = (vDom, dom) => {
     reconcileRec(vDom, dom);
     applyOperations();
 };
+
+
+function cloneNodeWithEvents(orgNode) {
+    console.log('cloing', orgNode);
+    var orgNodeEvenets = orgNode.getElementsByTagName('*');
+    var cloneNode = orgNode.cloneNode(true);
+    var cloneNodeEvents = cloneNode.getElementsByTagName('*');
+
+    const elem = cloneNodeEvents[1];
+    console.log(eval('console.log(elem.onclick)'));
+    var allEvents = new Array('onabort', 'onbeforecopy', 'onbeforecut', 'onbeforepaste', 'onblur', 'onchange', 'onclick',
+        'oncontextmenu', 'oncopy', 'ondblclick', 'ondrag', 'ondragend', 'ondragenter', 'ondragleave',
+        'ondragover', 'ondragstart', 'ondrop', 'onerror', 'onfocus', 'oninput', 'oninvalid', 'onkeydown',
+        'onkeypress', 'onkeyup', 'onload', 'onmousedown', 'onmousemove', 'onmouseout',
+        'onmouseover', 'onmouseup', 'onmousewheel', 'onpaste', 'onreset', 'onresize', 'onscroll', 'onsearch', 'onselect', 'onselectstart', 'onsubmit', 'onunload');
+
+    for (var j = 0; j < allEvents.length; j++) {
+        // if (orgNode[allEvents[j]]) {
+        //     console.log(true, orgNode[allEvents[j]]);
+        //     cloneNode[allEvents[j]] = orgNode[allEvents[j]];
+        // }
+        eval('if( orgNode.' + allEvents[j] + ' ) cloneNode.' + allEvents[j] + ' = orgNode.' + allEvents[j]);
+    }
+
+    for (var i = 0; i < orgNodeEvenets.length; i++) {
+        for (var j = 0; j < allEvents.length; j++) {
+            eval('if( orgNodeEvenets[i].' + allEvents[j] + ' ) cloneNodeEvents[i].' + allEvents[j] + ' = orgNodeEvenets[i].' + allEvents[j]);
+        }
+    }
+
+    return cloneNode;
+}
 
 export default reconcile;
